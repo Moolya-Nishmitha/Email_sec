@@ -1,0 +1,23 @@
+From: Bank Security <security@bank-alert.example>
+To: customer@example.com
+Reply-To: verify-account@attacker.example.net
+Return-Path: <bounce@attacker.example.net>
+Subject: URGENT: KYC verification required
+Date: Sat, 19 Sep 2026 01:05:00 +0530
+Message-ID: <phish002@example.net>
+Authentication-Results: example.net;
+    spf=fail;
+    dkim=fail;
+    dmarc=fail
+
+Content-Type: text/html
+
+<html>
+<body>
+<h2>KYC Verification Required</h2>
+<p>Your account has been temporarily restricted.</p>
+<p>Complete KYC verification within 12 hours to avoid permanent suspension.</p>
+<a href="http://secure-verification.example.net/kyc">Complete KYC Verification</a>
+<p>Please enter your account number, password and verification details.</p>
+</body>
+</html>

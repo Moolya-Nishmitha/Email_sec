@@ -1,0 +1,20 @@
+From: newsletter@example.com
+To: user@example.com
+Subject: This week's newsletter
+Date: Sat, 19 Sep 2026 01:20:00 +0530
+Message-ID: <legit002@example.com>
+Authentication-Results: example.com;
+    spf=pass;
+    dkim=pass;
+    dmarc=pass
+
+Content-Type: text/plain
+
+Hello,
+
+Here is this week's newsletter.
+
+Thank you for subscribing.
+
+Regards,
+Newsletter Team
