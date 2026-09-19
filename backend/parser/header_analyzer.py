@@ -110,6 +110,24 @@ def analyze_headers(email_data):
         email_data.get("received", [])
     )
 
+    indicators = []
+
+    if authentication["spf"] == "FAIL":
+        indicators.append("SPF failed")
+
+    if authentication["dkim"] == "FAIL":
+        indicators.append("DKIM failed")
+
+    if authentication["dmarc"] == "FAIL":
+        indicators.append("DMARC failed")
+
+    indicators.extend(warnings)
+
+    if received_ips:
+        indicators.append(
+            f"{len(received_ips)} IP address(es) found in Received headers"
+        )
+
     return {
         "authentication": authentication,
         "sender_warnings": warnings,
@@ -117,4 +135,5 @@ def analyze_headers(email_data):
             email_data.get("received", [])
         ),
         "received_ips": received_ips,
+        "indicators": indicators,
     }

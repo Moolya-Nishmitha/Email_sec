@@ -57,7 +57,7 @@ def generate_report(data: dict) -> dict:
     warnings = data.get("header_warnings", [])
 
     generated_at = datetime.now(timezone.utc).strftime(
-    "%Y-%m-%d %H:%M:%S UTC"
+        "%Y-%m-%d %H:%M:%S UTC"
     )
 
     # Build a plain-text formatted report (good for console/demo display)
