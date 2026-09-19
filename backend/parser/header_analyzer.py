@@ -12,22 +12,22 @@ def check_authentication(authentication_results):
     result = {
         "spf": "UNKNOWN",
         "dkim": "UNKNOWN",
-        "dmarc": "UNKNOWN"
+        "dmarc": "UNKNOWN",
     }
 
     spf_match = re.search(
         r"\bspf=(pass|fail|softfail|neutral|none|temperror|permerror)\b",
-        text
+        text,
     )
 
     dkim_match = re.search(
         r"\bdkim=(pass|fail|neutral|none|temperror|permerror)\b",
-        text
+        text,
     )
 
     dmarc_match = re.search(
         r"\bdmarc=(pass|fail|bestguesspass|none|temperror|permerror)\b",
-        text
+        text,
     )
 
     if spf_match:
@@ -54,11 +54,9 @@ def check_sender_mismatch(email_data):
     reply_to = email_data.get("reply_to", "").lower()
     return_path = email_data.get("return_path", "").lower()
 
-    # Clean Return-Path
     return_path = return_path.replace("<", "").replace(">", "")
 
     if sender and reply_to and "@" in sender and "@" in reply_to:
-
         sender_domain = sender.split("@")[-1]
         reply_domain = reply_to.split("@")[-1]
 
@@ -68,7 +66,6 @@ def check_sender_mismatch(email_data):
             )
 
     if sender and return_path and "@" in sender and "@" in return_path:
-
         sender_domain = sender.split("@")[-1]
         return_domain = return_path.split("@")[-1]
 
@@ -88,10 +85,9 @@ def extract_received_ips(received_headers):
     ips = []
 
     for header in received_headers:
-
         found_ips = re.findall(
             r"\b(?:\d{1,3}\.){3}\d{1,3}\b",
-            header
+            header,
         )
 
         ips.extend(found_ips)
@@ -101,8 +97,7 @@ def extract_received_ips(received_headers):
 
 def analyze_headers(email_data):
     """
-    Perform complete email header analysis
-    and generate security indicators.
+    Perform complete email header analysis.
     """
 
     authentication = check_authentication(
@@ -117,7 +112,6 @@ def analyze_headers(email_data):
 
     indicators = []
 
-    # Authentication indicators
     if authentication["spf"] == "FAIL":
         indicators.append("SPF failed")
 
@@ -127,10 +121,8 @@ def analyze_headers(email_data):
     if authentication["dmarc"] == "FAIL":
         indicators.append("DMARC failed")
 
-    # Sender mismatch indicators
     indicators.extend(warnings)
 
-    # Received IP indicator
     if received_ips:
         indicators.append(
             f"{len(received_ips)} IP address(es) found in Received headers"
@@ -143,5 +135,5 @@ def analyze_headers(email_data):
             email_data.get("received", [])
         ),
         "received_ips": received_ips,
-        "indicators": indicators
+        "indicators": indicators,
     }
