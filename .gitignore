@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+.venv/
+
+# Environment variables / secrets
+.env
+.env.*
+
+# Private email samples
+samples/private/
+*.eml
+
+# Generated reports
+reports/generated/
+
+# Uploads
+uploads/
+
+# IDE
+.vscode/
+.idea/
