@@ -1,5 +1,6 @@
-from pathlib import Path
 import tempfile
+from pathlib import Path
+from typing import Annotated
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
 
@@ -21,7 +22,9 @@ def health_check():
 
 
 @app.post("/analyze")
-async def analyze_email(file: UploadFile = File(...)):
+async def analyze_email(
+    file: Annotated[UploadFile, File(...)],
+):
     if not file.filename:
         raise HTTPException(
             status_code=400,
@@ -56,7 +59,7 @@ async def analyze_email(file: UploadFile = File(...)):
         temp_path = Path(temp_file.name)
 
     try:
-        # Team modules will be integrated here.
+        # Team analysis modules will be integrated here.
         result = {
             "filename": file.filename,
             "status": "received",
