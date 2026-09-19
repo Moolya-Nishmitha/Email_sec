@@ -1,0 +1,20 @@
+From: alerts@example.com
+To: you@example.com
+Subject: Weekly digest with multiple links
+Date: Sat, 19 Sep 2026 03:05:00 +0530
+Message-ID: <edge002@example.com>
+Authentication-Results: example.com;
+    spf=pass;
+    dkim=pass;
+    dmarc=pass
+
+Content-Type: text/html
+
+<html>
+<body>
+<p>Check out these links:</p>
+<a href="https://example.com/page1">Link 1</a>
+<a href="https://example.org/page2">Link 2</a>
+<a href="http://example.net/page3">Link 3</a>
+</body>
+</html>
