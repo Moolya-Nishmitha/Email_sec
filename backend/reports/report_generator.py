@@ -26,7 +26,7 @@ threat_engine.py and ioc_analyzer.py actually return):
 }
 """
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 def generate_report(data: dict) -> dict:
@@ -56,7 +56,9 @@ def generate_report(data: dict) -> dict:
     ips = data.get("ips", [])
     warnings = data.get("header_warnings", [])
 
-    generated_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    generated_at = datetime.now(timezone.utc).strftime(
+        "%Y-%m-%d %H:%M:%S UTC"
+    )
 
     # Build a plain-text formatted report (good for console/demo display)
     lines = []

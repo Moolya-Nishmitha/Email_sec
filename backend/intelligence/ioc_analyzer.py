@@ -1,10 +1,9 @@
-import re
 import ipaddress
 import json
-import urllib.request
+import re
 import socket
+import urllib.request
 from urllib.parse import urlparse
-
 
 # ============================================================
 # REGEX PATTERNS
@@ -12,22 +11,23 @@ from urllib.parse import urlparse
 
 URL_PATTERN = re.compile(
     r"https?://[^\s<>'\"]+",
-    re.IGNORECASE
+    re.IGNORECASE,
 )
 
 IP_PATTERN = re.compile(
-    r"\b(?:\d{1,3}\.){3}\d{1,3}\b"
+    r"\b(?:\d{1,3}\.){3}\d{1,3}\b",
 )
 
 DOMAIN_PATTERN = re.compile(
     r"\b(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)"
-    r"+[a-zA-Z]{2,}\b"
+    r"+[a-zA-Z]{2,}\b",
 )
 
 
 # ============================================================
 # URL EXTRACTION
 # ============================================================
+
 
 def extract_urls(text):
     """
@@ -53,6 +53,7 @@ def extract_urls(text):
 # ============================================================
 # IP EXTRACTION
 # ============================================================
+
 
 def extract_ips(text):
     """
@@ -82,6 +83,7 @@ def extract_ips(text):
 # ============================================================
 # IP CLASSIFICATION
 # ============================================================
+
 
 def classify_ip(ip):
     """
@@ -113,6 +115,7 @@ def classify_ip(ip):
 # IP GEOLOCATION / INTELLIGENCE
 # ============================================================
 
+
 def get_ip_intelligence(ip):
     """
     Retrieve basic geolocation and network information
@@ -140,7 +143,7 @@ def get_ip_intelligence(ip):
             "timezone": None,
             "isp": None,
             "organization": None,
-            "asn": None
+            "asn": None,
         }
 
     try:
@@ -163,7 +166,7 @@ def get_ip_intelligence(ip):
                 "timezone": None,
                 "isp": None,
                 "organization": None,
-                "asn": None
+                "asn": None,
             }
 
         return {
@@ -179,7 +182,7 @@ def get_ip_intelligence(ip):
             "timezone": data.get("timezone"),
             "isp": data.get("isp"),
             "organization": data.get("org"),
-            "asn": data.get("as")
+            "asn": data.get("as"),
         }
 
     except Exception:
@@ -196,13 +199,14 @@ def get_ip_intelligence(ip):
             "timezone": None,
             "isp": None,
             "organization": None,
-            "asn": None
+            "asn": None,
         }
 
 
 # ============================================================
 # DOMAIN DNS INTELLIGENCE
 # ============================================================
+
 
 def resolve_domain(domain):
     """
@@ -215,7 +219,7 @@ def resolve_domain(domain):
     result = {
         "domain": domain,
         "status": "lookup_failed",
-        "resolved_ips": []
+        "resolved_ips": [],
     }
 
     if not domain:
@@ -225,13 +229,15 @@ def resolve_domain(domain):
         addresses = socket.getaddrinfo(
             domain,
             None,
-            socket.AF_INET
+            socket.AF_INET,
         )
 
-        resolved_ips = sorted({
-            address[4][0]
-            for address in addresses
-        })
+        resolved_ips = sorted(
+            {
+                address[4][0]
+                for address in addresses
+            }
+        )
 
         result["resolved_ips"] = resolved_ips
 
@@ -252,6 +258,7 @@ def resolve_domain(domain):
 # ============================================================
 # DOMAIN EXTRACTION
 # ============================================================
+
 
 def extract_domains(text):
     """
@@ -286,7 +293,6 @@ def extract_domains(text):
     candidates = DOMAIN_PATTERN.findall(text)
 
     for candidate in candidates:
-
         candidate = candidate.lower().rstrip(".")
 
         # Ignore IP addresses
@@ -305,6 +311,7 @@ def extract_domains(text):
 # ============================================================
 # MAIN IOC ANALYZER
 # ============================================================
+
 
 def enrich_iocs(text):
     """
@@ -335,5 +342,5 @@ def enrich_iocs(text):
     return {
         "ips": ip_intelligence,
         "domains": domain_intelligence,
-        "urls": urls
+        "urls": urls,
     }
