@@ -1,0 +1,19 @@
+From: notifications@example.com
+To: user@example.com
+Subject: Your monthly account statement
+Date: Sat, 19 Sep 2026 01:15:00 +0530
+Message-ID: <legit001@example.com>
+Authentication-Results: example.com;
+    spf=pass;
+    dkim=pass;
+    dmarc=pass
+
+Content-Type: text/plain
+
+Hello,
+
+Your monthly account statement is now available.
+
+This is an automated notification.
+
+Thank you.
