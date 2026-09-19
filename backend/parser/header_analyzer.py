@@ -101,7 +101,8 @@ def extract_received_ips(received_headers):
 
 def analyze_headers(email_data):
     """
-    Perform complete email header analysis.
+    Perform complete email header analysis
+    and generate security indicators.
     """
 
     authentication = check_authentication(
@@ -114,11 +115,33 @@ def analyze_headers(email_data):
         email_data.get("received", [])
     )
 
+    indicators = []
+
+    # Authentication indicators
+    if authentication["spf"] == "FAIL":
+        indicators.append("SPF failed")
+
+    if authentication["dkim"] == "FAIL":
+        indicators.append("DKIM failed")
+
+    if authentication["dmarc"] == "FAIL":
+        indicators.append("DMARC failed")
+
+    # Sender mismatch indicators
+    indicators.extend(warnings)
+
+    # Received IP indicator
+    if received_ips:
+        indicators.append(
+            f"{len(received_ips)} IP address(es) found in Received headers"
+        )
+
     return {
         "authentication": authentication,
         "sender_warnings": warnings,
         "received_hops": len(
             email_data.get("received", [])
         ),
-        "received_ips": received_ips
+        "received_ips": received_ips,
+        "indicators": indicators
     }
