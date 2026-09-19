@@ -43,3 +43,7 @@ print("\n--- BODY IOCs ---")
 
 print("URLs:", email_data["urls"])
 print("IPs:", email_data["ips"])
+print("\n--- SECURITY INDICATORS ---")
+
+for indicator in header_analysis["indicators"]:
+    print("⚠", indicator)
