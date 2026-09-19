@@ -1,0 +1,12 @@
+From: sender@example.com
+To: you@example.com
+Subject: Testing missing SPF result
+Date: Sat, 19 Sep 2026 03:10:00 +0530
+Message-ID: <edge003@example.com>
+Authentication-Results: example.com;
+    dkim=pass;
+    dmarc=pass
+
+Content-Type: text/plain
+
+This email's Authentication-Results header has no spf= entry at all.
