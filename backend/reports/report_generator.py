@@ -28,6 +28,7 @@ threat_engine.py and ioc_analyzer.py actually return):
 
 from datetime import datetime, timezone
 
+
 def generate_report(data: dict) -> dict:
     """
     Takes the combined analysis result dict and returns a report dict

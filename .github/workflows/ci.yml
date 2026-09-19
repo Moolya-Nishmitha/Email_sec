@@ -1,4 +1,4 @@
-name: DeepTrace Backend CI
+name: Email_sec Backend CI
 
 on:
   push:

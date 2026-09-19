@@ -18,7 +18,6 @@ opaque/random classifications.
 
 from __future__ import annotations
 
-
 # ============================================================
 # SCORE WEIGHTS
 # ============================================================
